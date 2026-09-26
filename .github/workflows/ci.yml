@@ -1,0 +1,64 @@
+name: Windows checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Business regression tests
+        run: python -m unittest discover -s tests -v
+      - name: Real Tk integration tests
+        env:
+          CAMPUS_GUI_TESTS: '1'
+        run: python -m unittest discover -s tests -p test_gui.py -v
+      - name: Diff whitespace
+        run: git diff --check
+
+  package:
+    needs: tests
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements-build.txt
+      - run: python -m pip install -r requirements-build.txt
+      - run: python -m PyInstaller --noconfirm CampusNet.spec
+      - name: Packaged offline self-test
+        shell: pwsh
+        run: |
+          $report = Join-Path $PWD 'self-test.json'
+          $process = Start-Process -FilePath './dist/CampusNet.exe' -ArgumentList '--self-test', ('"' + $report + '"') -WindowStyle Hidden -PassThru
+          if (-not $process.WaitForExit(60000)) {
+            Stop-Process -Id $process.Id
+            throw 'Self-test timeout'
+          }
+          if ($process.ExitCode -ne 0) { throw 'Self-test failed' }
+          $result = Get-Content -LiteralPath $report -Raw | ConvertFrom-Json
+          if (-not $result.ok) { throw 'Self-test report failed' }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: CampusNet-windows-test-build
+          path: |
+            dist/CampusNet.exe
+            self-test.json
+          if-no-files-found: error
+          retention-days: 7

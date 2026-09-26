@@ -1,0 +1,3 @@
+# Runtime uses the standard library, including Tkinter.
+# Matches the locally validated packaging toolchain.
+pyinstaller==6.16.0

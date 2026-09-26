@@ -1,0 +1,21 @@
+* text=auto
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.txt text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+.editorconfig text eol=lf
+*.bat text eol=crlf
+*.ico binary
+*.png binary
+*.jpg binary
+# Preserve the bytes of captured resources.
+reference/** -text
+reference/**/*.md text eol=lf
+# Exclude research material from source release archives.
+reference/ export-ignore
+docs/history/ export-ignore
+.github/ export-ignore

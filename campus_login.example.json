@@ -1,0 +1,19 @@
+{
+  "server": "192.168.0.203",
+  "drcom_port": 80,
+  "eportal_port": 803,
+  "account": "你的学号或工号",
+  "password": "你的密码",
+  "isp": "1",
+  "terminal_type": "3",
+  "business_type": "3",
+  "program_index": "",
+  "page_index": "",
+  "rcn": "",
+  "watch_interval": 30,
+  "timeout": 5,
+  "traffic_interval": 5,
+  "auto_login_on_start": 0,
+  "auto_watch": 0,
+  "campus_networks": ["WZXY-Student"]
+}

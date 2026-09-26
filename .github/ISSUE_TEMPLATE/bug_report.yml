@@ -1,0 +1,22 @@
+name: 缺陷报告
+description: 描述可复现的问题，请使用脱敏信息
+body:
+  - type: textarea
+    id: environment
+    attributes:
+      label: 运行环境
+      description: 程序版本、Windows 版本、分辨率、系统缩放、源码或独立程序
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤、预期与实际行为
+      description: 不要提交账号密码、真实 MAC、配置或完整请求 URL
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 脱敏截图或离线自检结果
+      description: 优先使用 --demo 复现界面问题
