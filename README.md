@@ -4,7 +4,7 @@
 
 当前版本：2026.09.24.1。本项目以 [MIT 许可证](LICENSE)开源；发布准备过程见 [发布准备](docs/release-readiness.md)。
 
-本地预览可双击 preview-ui.bat：优先运行本次构建的离线演示，没有本地构建时从源码启动。原有启动脚本仍指向 dist 中的已部署版本；新版验收产物单独放在 .artifacts/dist。
+本地预览可双击 preview-ui.bat：优先运行本次构建的离线演示，没有本地构建时从源码启动。自行构建的产物位于 dist，验收产物单独放在 .artifacts/dist。
 
 ## 新界面
 
